@@ -1,0 +1,79 @@
+CREATE TABLE animal (
+cod_pet INTEGER PRIMARY KEY,
+sexo INTEGER,
+tipo_pet INTEGER,
+nome_pet VARCHAR(15),
+cod_cliente INTEGER
+)
+
+INSERT INTO `animal`(`cod_pet`, `nome_pet`, `sexo`, `tipo_pet`, `cod_cliente`) VALUES (1,"Scott","macho","gato",1)
+
+INSERT INTO `animal`(`cod_pet`, `nome_pet`, `sexo`, `tipo_pet`, `cod_cliente`) VALUES (2,"Fuffy","femea","gato",2)
+
+SELECT `nome_pet`, `sexo` FROM `animal` WHERE cod_pet = 2
+
+
+CREATE TABLE cliente (
+cod_cliente INTEGER PRIMARY KEY,
+cpf VARCHAR(11),
+nome_cliente VARCHAR(10),
+cod_func INTEGER
+)
+
+INSERT INTO `cliente`(`cod_cliente`, `cpf`, `nome_cliente`, `cod_func`) VALUES (1,"12345678901","sara",1)
+
+INSERT INTO `cliente`(`cod_cliente`, `cpf`, `nome_cliente`, `cod_func`) VALUES (2,"98765432103","Andreisse",1)
+
+
+CREATE TABLE servico (
+cod_prod INTEGER,
+cod_serv INTEGER PRIMARY KEY,
+cod_func INTEGER,
+cod_cliente INTEGER,
+data DATETIME,
+tipo_serv VARCHAR(30)
+)
+
+INSERT INTO `servico`(`cod_prod`, `cod_serv`, `cod_func`, `cod_cliente`, `data`, `tipo_serv`) VALUES (1,1,1,1,12/05/2022,"vacinação")
+
+
+CREATE TABLE funcionario (
+cargo VARCHAR(15),
+cod_func INTEGER PRIMARY KEY,
+nome_func VARCHAR(30)
+)
+
+INSERT INTO `funcionario`(`cargo`, `cod_func`, `nome_func`) VALUES ("veterinario",1,"Sergio")
+
+UPDATE `funcionario` SET `nome_func`="Fabio" WHERE `cod_func`= 1
+
+
+CREATE TABLE produto (
+cod_prod INTEGER PRIMARY KEY,
+descricao VARCHAR(45),
+nome_prod VARCHAR(10)
+)
+
+INSERT INTO `produto`(`cod_prod`, `descricao`, `nome_prod`) VALUES (1,"vacina_raiva","vacina")
+
+
+CREATE TABLE Entidade1 (
+
+)
+
+CREATE TABLE oferece (
+cod_serv INTEGER,
+cod_func INTEGER,
+FOREIGN KEY(cod_serv) REFERENCES servico (cod_serv),
+FOREIGN KEY(cod_func) REFERENCES funcionario (cod_func)
+)
+
+CREATE TABLE fornece (
+cod_prod INTEGER,
+cod_serv INTEGER,
+FOREIGN KEY(cod_prod) REFERENCES produto (cod_prod),
+FOREIGN KEY(cod_serv) REFERENCES servico (cod_serv)
+)
+
+ALTER TABLE animal ADD FOREIGN KEY(cod_cliente) REFERENCES cliente (cod_cliente)
+ALTER TABLE cliente ADD FOREIGN KEY(cod_func) REFERENCES funcionario (cod_func)
